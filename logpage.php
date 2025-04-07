@@ -80,7 +80,8 @@ p {
 
         <div class="button-container">
             <!-- Admin Panel Button: Redirect to admin-login.html -->
-            <a class="btn" href='admin/login.php'>Admin Panel</a>
+             
+            <a class="btn" href='login.php'>Admin Panel</a>
             
             <!-- Staff Panel Button: Redirect to staff-login.html -->
             <a class="btn" href='staff\login.php'>Staff Panel</a>
