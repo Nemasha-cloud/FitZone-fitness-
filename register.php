@@ -1,27 +1,21 @@
+
+
 <?php
 include('db.php');
 
-if (isset($_POST['login'])) {
+// Check if the form is submitted
+if (isset($_POST['register'])) {
     $username = $_POST['username'];
-    $password = $_POST['password'];
+    $email = $_POST['email'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash the password
 
-    // Query to check if username exists
-    $sql = "SELECT * FROM staff WHERE username='$username'";
-    $result = $conn->query($sql);
+    // Insert into the staff table
+    $sql = "INSERT INTO staff (username, password, email) VALUES ('$username', '$password', '$email')";
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        // Verify the password
-        if (password_verify($password, $row['password'])) {
-            // Start session and store user info
-            session_start();
-            $_SESSION['username'] = $username;
-            header("Location: dashboard.php"); // Redirect to dashboard
-        } else {
-            echo "Invalid password!";
-        }
+    if ($conn->query($sql) === TRUE) {
+        echo "New staff member registered successfully!";
     } else {
-        echo "No user found with that username!";
+        echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
 ?>
@@ -31,7 +25,7 @@ if (isset($_POST['login'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Login</title>
+    <title>Staff Registration</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <style>
@@ -101,21 +95,23 @@ a {
 </style>
 <body>
     <div class="form-container">
-        <h2>Staff Login</h2>
-        <form action="login.php" method="POST">
+        <h2>Staff Registration</h2>
+        <form action="register.php" method="POST">
             <div class="input-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
             </div>
             <div class="input-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <a href="staff/dashboard.php"></a>
-            <button type="submit" name="login" class="btn">Login</button>
-            
+            <button type="submit" name="register" class="btn">Register</button>
         </form>
-        <p>Don't have an account? <a href="register.php">Register here</a></p>
+        <p>Already have an account? <a href="login.php">Login here</a></p>
     </div>
 </body>
 </html>
