@@ -1,16 +1,14 @@
 <?php
-// Database credentials
-$servername = "localhost"; // Database server
-$username = "root"; // Database username
-$password = ""; // Database password
-$dbname = "fitness_center"; // Database name
+$servername = "127.0.0.1";
+$username = "root"; // Adjust based on your MySQL username
+$password = ""; // Adjust based on your MySQL password
+$database = "fitness_center";
 
-// Create a connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
 
-// Check the connection
+// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 ?>
-
